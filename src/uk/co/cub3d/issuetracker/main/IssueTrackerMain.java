@@ -1,7 +1,6 @@
 package uk.co.cub3d.issuetracker.main;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -13,7 +12,6 @@ import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +28,7 @@ public class IssueTrackerMain
     private JButton addIssueButton;
     private JLabel userLabel;
     private JButton viewButton;
+    private JButton editButton;
 
     public int currentLine = 0;
 
@@ -66,13 +65,23 @@ public class IssueTrackerMain
 
         addIssueButton.addActionListener((a) -> onAddIssue());
         viewButton.addActionListener((a) -> onView());
+        editButton.addActionListener((a) -> onEdit());
+
+        onLogin();
+    }
+
+    private void onEdit()
+    {
+        String hash = table1.getValueAt(table1.getSelectedRow(), 0).toString();
+
+        new IssueTrackerAddIssue(true, hash);
     }
 
     private void onView()
     {
         String hash = table1.getValueAt(table1.getSelectedRow(), 0).toString();
 
-        new IssuesTrackerViewIssue(hash);
+        new IssueTrackerViewIssue(hash);
     }
 
     public void onLogin()
@@ -88,16 +97,37 @@ public class IssueTrackerMain
 
     private void onAddIssue()
     {
-        new IssueTrackerAddIssue();
+        new IssueTrackerAddIssue(false, "");
     }
 
-    public void addIssue(String title, String description)
+    public void addIssue(IssueInfo info)
     {
-        table1.setValueAt(UUID.randomUUID().toString(), currentLine, 0);
-        table1.setValueAt(currentUser.username, currentLine, 1);
-        table1.setValueAt(title, currentLine, 2);
+        info.hash = UUID.randomUUID();
 
-        issues.put(table1.getValueAt(currentLine, 0).toString(), new IssueInfo(title, description));
+        table1.setValueAt(info.hash.toString(), currentLine, 0);
+        table1.setValueAt(currentUser.username, currentLine, 1);
+        table1.setValueAt(info.title, currentLine, 2);
+
+        issues.put(table1.getValueAt(currentLine, 0).toString(), info);
+
+        currentLine++;
+    }
+
+    public void updateIssues()
+    {
+        ((DefaultTableModel)table1.getModel()).setRowCount(0);
+        table1.revalidate();
+        ((DefaultTableModel)table1.getModel()).setRowCount(20);
+        currentLine = 0;
+
+        issues.values().forEach(this::addIssue_lam);
+    }
+
+    private void addIssue_lam(IssueInfo info)
+    {
+        table1.setValueAt(info.hash, currentLine, 0);
+        table1.setValueAt(currentUser.username, currentLine, 1);
+        table1.setValueAt(info.title, currentLine, 2);
 
         currentLine++;
     }

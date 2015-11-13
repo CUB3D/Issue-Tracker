@@ -24,7 +24,7 @@ public class IssueTrackerLogin
         frame = new JFrame();
 
         frame.setContentPane(content);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
         frame.pack();
 

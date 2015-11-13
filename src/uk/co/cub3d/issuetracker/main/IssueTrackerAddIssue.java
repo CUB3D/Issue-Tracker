@@ -21,12 +21,15 @@ public class IssueTrackerAddIssue
 
     public JFrame frame;
 
-    public IssueTrackerAddIssue()
+    public boolean isEditing = false;
+    public String hash;
+
+    public IssueTrackerAddIssue(boolean editing, String hash)
     {
         frame = new JFrame();
 
         frame.setContentPane(content);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         frame.setMinimumSize(new Dimension(300, 300));
 
@@ -36,11 +39,39 @@ public class IssueTrackerAddIssue
 
         cancelButton.addActionListener((a) -> frame.dispose());
         addButton.addActionListener((a) -> onAdd());
+
+        if(editing)
+        {
+            addButton.setText("Edit");
+
+            IssueInfo info = IssueTrackerMain.instance.issues.get(hash);
+
+            textFieldTitle.setText(info.title);
+            descriptionTextArea.setText(info.description);
+
+            this.isEditing = true;
+            this.hash = hash;
+        }
     }
 
     private void onAdd()
     {
-        IssueTrackerMain.instance.addIssue(textFieldTitle.getText(), descriptionTextArea.getText());
+        if(isEditing)
+        {
+            IssueInfo info = IssueTrackerMain.instance.issues.get(hash);
+
+            info.title = textFieldTitle.getText();
+            info.description = descriptionTextArea.getText();
+
+            IssueTrackerMain.instance.issues.put(info.hash.toString(), info);
+
+            IssueTrackerMain.instance.updateIssues();
+        }
+        else
+        {
+            IssueTrackerMain.instance.addIssue(new IssueInfo(textFieldTitle.getText(), descriptionTextArea.getText()));
+        }
+
         frame.dispose();
     }
 }

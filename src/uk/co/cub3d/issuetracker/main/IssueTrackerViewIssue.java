@@ -11,7 +11,7 @@ import java.awt.Dimension;
 /**
  * Created by Callum on 12/11/2015.
  */
-public class IssuesTrackerViewIssue
+public class IssueTrackerViewIssue
 {
     private JPanel content;
     private JTextArea descriptionTextArea;
@@ -20,7 +20,7 @@ public class IssuesTrackerViewIssue
 
     public JFrame frame;
 
-    public IssuesTrackerViewIssue(String hash)
+    public IssueTrackerViewIssue(String hash)
     {
         frame = new JFrame("Issue Viewer");
 
