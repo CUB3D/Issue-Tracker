@@ -104,13 +104,9 @@ public class IssueTrackerMain
     {
         info.hash = UUID.randomUUID();
 
-        table1.setValueAt(info.hash.toString(), currentLine, 0);
-        table1.setValueAt(currentUser.username, currentLine, 1);
-        table1.setValueAt(info.title, currentLine, 2);
+        issues.put(info.hash.toString(), info);
 
-        issues.put(table1.getValueAt(currentLine, 0).toString(), info);
-
-        currentLine++;
+        addIssue_lam(info);
     }
 
     public void updateIssues()
@@ -130,6 +126,8 @@ public class IssueTrackerMain
         table1.setValueAt(info.title, currentLine, 2);
 
         currentLine++;
+
+        IssueIO.writeIssues(issues);
     }
 
     public static void main(String[] args)
