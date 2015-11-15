@@ -107,6 +107,8 @@ public class IssueTrackerMain
         issues.put(info.hash.toString(), info);
 
         addIssue_lam(info);
+
+        IssueIO.writeIssues(issues);
     }
 
     public void updateIssues()
@@ -117,6 +119,8 @@ public class IssueTrackerMain
         currentLine = 0;
 
         issues.values().forEach(this::addIssue_lam);
+
+        IssueIO.writeIssues(issues);
     }
 
     public void addIssue_lam(IssueInfo info)
@@ -126,8 +130,6 @@ public class IssueTrackerMain
         table1.setValueAt(info.title, currentLine, 2);
 
         currentLine++;
-
-        IssueIO.writeIssues(issues);
     }
 
     public static void main(String[] args)

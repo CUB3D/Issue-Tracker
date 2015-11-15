@@ -99,6 +99,8 @@ public class IssueIO
                         IssueTrackerMain.instance.issues.put(hash.toString(), info);
                         IssueTrackerMain.instance.addIssue_lam(info);
                     }
+
+                    reader.close();
                 } catch(IOException e)
                 {
                     e.printStackTrace();
