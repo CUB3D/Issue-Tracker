@@ -2,6 +2,8 @@ package uk.co.cub3d.issuetracker.main;
 
 import sun.nio.fs.BasicFileAttributesHolder;
 
+import javax.swing.JOptionPane;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by Callum on 13/11/2015.
@@ -47,6 +50,60 @@ public class IssueIO
         } catch(IOException e)
         {
             e.printStackTrace();
+        }
+    }
+
+    public static void attemptLoadPreviousIssues()
+    {
+        Path outputFile = Paths.get("issues.csv");
+
+        if(Files.exists(outputFile))
+        {
+            int i = JOptionPane.showConfirmDialog(null, "Previous issue save found, use?");
+
+            if(i == JOptionPane.OK_OPTION)
+            {
+                try
+                {
+                    BufferedReader reader = Files.newBufferedReader(outputFile);
+
+                    String s = "";
+
+                    reader.readLine(); // skip the line with the column headers for excel
+
+                    while((s = reader.readLine()) != null)
+                    {
+                        String[] records = s.split(",");
+
+                        UUID hash = UUID.fromString(records[0]);
+
+                        String title = records[1];
+
+                        String description = records[2] + "\n";
+
+                        while(!(s = reader.readLine()).endsWith("\""))
+                        {
+                            description += s;
+                            description += "\n"; // re-add newlines
+                        }
+
+                        description += s;
+
+                        // remove the quotes that allow excel to put the whole description in a multiline cell
+                        description = description.substring(1, description.length() - 1);
+
+                        IssueInfo info = new IssueInfo(title, description);
+
+                        info.hash = hash;
+
+                        IssueTrackerMain.instance.issues.put(hash.toString(), info);
+                        IssueTrackerMain.instance.addIssue_lam(info);
+                    }
+                } catch(IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

@@ -119,7 +119,7 @@ public class IssueTrackerMain
         issues.values().forEach(this::addIssue_lam);
     }
 
-    private void addIssue_lam(IssueInfo info)
+    public void addIssue_lam(IssueInfo info)
     {
         table1.setValueAt(info.hash, currentLine, 0);
         table1.setValueAt(currentUser.username, currentLine, 1);
@@ -142,6 +142,8 @@ public class IssueTrackerMain
         }
 
         instance = new IssueTrackerMain();
+
+        IssueIO.attemptLoadPreviousIssues();
     }
 
     private void createUIComponents()
