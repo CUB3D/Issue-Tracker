@@ -69,7 +69,7 @@ public class IssueTrackerAddIssue
         }
         else
         {
-            IssueTrackerMain.instance.addIssue(new IssueInfo(textFieldTitle.getText(), descriptionTextArea.getText()));
+            IssueTrackerMain.instance.addIssue(new IssueInfo(textFieldTitle.getText(), descriptionTextArea.getText(), IssueTrackerMain.instance.currentUser.username));
         }
 
         frame.dispose();

@@ -41,7 +41,7 @@ public class IssueIO
 
             for(IssueInfo info : issues.values())
             {
-                output.write(info.hash + "," + info.title + ",\"" + info.description.replace("\n", System.lineSeparator()) + "\"" + System.lineSeparator());
+                output.write(info.hash + "," + info.title + "," + info.author + "," + (info.done ? "1" : "0") + ",\"" + info.description.replace("\n", System.lineSeparator()) + "\"" + System.lineSeparator());
             }
 
             output.flush();
@@ -78,8 +78,10 @@ public class IssueIO
                         UUID hash = UUID.fromString(records[0]);
 
                         String title = records[1];
+                        String author = records[2];
+                        boolean done = Integer.parseInt(records[3]) == 1;
 
-                        String description = records[2] + "\n";
+                        String description = records[4] + "\n";
 
                         while(!(s = reader.readLine()).endsWith("\""))
                         {
@@ -92,9 +94,10 @@ public class IssueIO
                         // remove the quotes that allow excel to put the whole description in a multiline cell
                         description = description.substring(1, description.length() - 1);
 
-                        IssueInfo info = new IssueInfo(title, description);
+                        IssueInfo info = new IssueInfo(title, description, author);
 
                         info.hash = hash;
+                        info.done = done;
 
                         IssueTrackerMain.instance.issues.put(hash.toString(), info);
                         IssueTrackerMain.instance.addIssue_lam(info);

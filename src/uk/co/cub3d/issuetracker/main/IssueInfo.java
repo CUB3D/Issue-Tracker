@@ -10,10 +10,13 @@ public class IssueInfo
     public String title;
     public String description;
     public UUID hash;
+    public boolean done;
+    public String author;
 
-    public IssueInfo(String title, String description)
+    public IssueInfo(String title, String description, String author)
     {
         this.title = title;
         this.description = description;
+        this.author = author;
     }
 }

@@ -1,5 +1,6 @@
 package uk.co.cub3d.issuetracker.main;
 
+import javax.management.modelmbean.ModelMBean;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,6 +13,7 @@ import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +31,7 @@ public class IssueTrackerMain
     private JLabel userLabel;
     private JButton viewButton;
     private JButton editButton;
+    private JButton doneButton;
 
     public int currentLine = 0;
 
@@ -61,13 +64,30 @@ public class IssueTrackerMain
         frame.setContentPane(content);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        frame.setMinimumSize(new Dimension(500, 500));
         frame.pack();
 
         addIssueButton.addActionListener((a) -> onAddIssue());
         viewButton.addActionListener((a) -> onView());
         editButton.addActionListener((a) -> onEdit());
+        doneButton.addActionListener((a) -> onDone());
 
         onLogin();
+    }
+
+    private void onDone()
+    {
+        String hash = table1.getValueAt(table1.getSelectedRow(), 0).toString();
+
+        IssueInfo info = issues.get(hash);
+
+        info.done = true;
+
+        issues.put(hash, info);
+
+        updateIssues();
+
+        IssueIO.writeIssues(issues);
     }
 
     private void onEdit()
@@ -126,8 +146,9 @@ public class IssueTrackerMain
     public void addIssue_lam(IssueInfo info)
     {
         table1.setValueAt(info.hash, currentLine, 0);
-        table1.setValueAt(currentUser.username, currentLine, 1);
+        table1.setValueAt(info.author, currentLine, 1);
         table1.setValueAt(info.title, currentLine, 2);
+        table1.setValueAt(""+info.done, currentLine, 3);
 
         currentLine++;
     }
@@ -151,11 +172,15 @@ public class IssueTrackerMain
     private void createUIComponents()
     {
         String data[][] = new String[20][4];
-        String[] names = new String[] {"ID", "Author", "Title", "View"};
+        String[] names = new String[] {"ID", "Author", "Title", "Done"};
 
         DefaultTableModel model = new DefaultTableModel(data, names);
 
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+
         table1 = new JTable(model);
+
+        table1.setRowSorter(sorter);
     }
 
 }
