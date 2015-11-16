@@ -1,7 +1,7 @@
 package uk.co.cub3d.issuetracker.main;
 
-import javax.management.modelmbean.ModelMBean;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -10,6 +10,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -32,12 +33,15 @@ public class IssueTrackerMain
     private JButton viewButton;
     private JButton editButton;
     private JButton doneButton;
+    private JCheckBox doneCheckBox;
 
     public int currentLine = 0;
 
     public LoginInfo currentUser = new LoginInfo("NO USER", null);
 
     public Map<String, IssueInfo> issues = new HashMap<>();
+
+    public TableRowSorter<DefaultTableModel> sorter;
 
     public static IssueTrackerMain instance;
 
@@ -72,7 +76,21 @@ public class IssueTrackerMain
         editButton.addActionListener((a) -> onEdit());
         doneButton.addActionListener((a) -> onDone());
 
+        doneCheckBox.addActionListener((a) -> onFilter());
+
         onLogin();
+    }
+
+    private void onFilter()
+    {
+        if(doneCheckBox.isSelected())
+        {
+            applyTableFilter("false", 3);
+        }
+        else
+        {
+            applyTableFilter("false|true", 3);
+        }
     }
 
     private void onDone()
@@ -153,6 +171,15 @@ public class IssueTrackerMain
         currentLine++;
     }
 
+    private void applyTableFilter(String status, int column)
+    {
+        RowFilter<DefaultTableModel, Object> rf = null;
+
+        rf = RowFilter.regexFilter(status, column);
+
+        sorter.setRowFilter(rf);
+    }
+
     public static void main(String[] args)
     {
         try
@@ -176,7 +203,7 @@ public class IssueTrackerMain
 
         DefaultTableModel model = new DefaultTableModel(data, names);
 
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        sorter = new TableRowSorter<>(model);
 
         table1 = new JTable(model);
 
