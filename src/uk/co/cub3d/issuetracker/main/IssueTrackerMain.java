@@ -153,7 +153,6 @@ public class IssueTrackerMain
     {
         ((DefaultTableModel)table1.getModel()).setRowCount(0);
         table1.revalidate();
-        ((DefaultTableModel)table1.getModel()).setRowCount(20);
         currentLine = 0;
 
         issues.values().forEach(this::addIssue_lam);
@@ -163,10 +162,7 @@ public class IssueTrackerMain
 
     public void addIssue_lam(IssueInfo info)
     {
-        table1.setValueAt(info.hash, currentLine, 0);
-        table1.setValueAt(info.author, currentLine, 1);
-        table1.setValueAt(info.title, currentLine, 2);
-        table1.setValueAt(""+info.done, currentLine, 3);
+        ((DefaultTableModel) table1.getModel()).addRow(new Object[]{info.hash, info.author, info.title, info.done});
 
         currentLine++;
     }
@@ -198,7 +194,7 @@ public class IssueTrackerMain
 
     private void createUIComponents()
     {
-        String data[][] = new String[20][4];
+        String data[][] = new String[0][4];
         String[] names = new String[] {"ID", "Author", "Title", "Done"};
 
         DefaultTableModel model = new DefaultTableModel(data, names);

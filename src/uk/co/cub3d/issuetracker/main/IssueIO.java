@@ -81,15 +81,23 @@ public class IssueIO
                         String author = records[2];
                         boolean done = Integer.parseInt(records[3]) == 1;
 
-                        String description = records[4] + "\n";
+                        String description = records[4];
 
-                        while(!(s = reader.readLine()).endsWith("\""))
+                        if(!s.endsWith("\""))
                         {
-                            description += s;
-                            description += "\n"; // re-add newlines
-                        }
+                            description += "\n";
 
-                        description += s;
+                            while ((s = reader.readLine()) != null && !s.endsWith("\""))
+                            {
+                                description += s;
+                                description += "\n"; // re-add newlines
+                            }
+
+                            if (s != null)
+                            {
+                                description += s;
+                            }
+                        }
 
                         // remove the quotes that allow excel to put the whole description in a multiline cell
                         description = description.substring(1, description.length() - 1);
