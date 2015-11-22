@@ -59,7 +59,23 @@ public class IssueIO
 
         if(Files.exists(outputFile))
         {
-            int i = JOptionPane.showConfirmDialog(null, "Previous issue save found, use?");
+            int i = 0;
+
+            switch(IssueProperties.load_existing)
+            {
+                case "prompt":
+                    i = JOptionPane.showConfirmDialog(null, "Previous issue save found, use?");
+                    break;
+                case "true":
+                    i = JOptionPane.OK_OPTION;
+                    break;
+                case "false":
+                    i = JOptionPane.CANCEL_OPTION;
+                    break;
+                default:
+                    i = JOptionPane.showConfirmDialog(null, "Previous issue save found, use?");
+                    break;
+            }
 
             if(i == JOptionPane.OK_OPTION)
             {

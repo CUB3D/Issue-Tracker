@@ -78,7 +78,8 @@ public class IssueTrackerMain
 
         doneCheckBox.addActionListener((a) -> onFilter());
 
-        onLogin();
+        if(IssueProperties.login_on_start)
+            onLogin();
     }
 
     private void onFilter()
@@ -178,6 +179,8 @@ public class IssueTrackerMain
 
     public static void main(String[] args)
     {
+        IssueProperties.loadProperties();
+
         try
         {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
