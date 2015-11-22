@@ -36,7 +36,16 @@ public class IssueTrackerLogin
         frame = new JFrame();
 
         frame.setContentPane(content);
-        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        if(IssueProperties.force_login)
+        {
+            frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        }
+        else
+        {
+            frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        }
+
         frame.setVisible(true);
         frame.pack();
 
@@ -116,8 +125,15 @@ public class IssueTrackerLogin
         if(passwordHash.equals(hash))
         {
             IssueTrackerMain.instance.login(new LoginInfo(username.getText()));
-        }
 
-        frame.dispose();
+            frame.dispose();
+        }
+        else
+        {
+            if(!IssueProperties.force_login)
+            {
+                frame.dispose();
+            }
+        }
     }
 }

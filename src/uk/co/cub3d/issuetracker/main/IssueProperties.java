@@ -13,6 +13,8 @@ public class IssueProperties
 {
     public static boolean login_on_start = false;
     public static String load_existing = "prompt";
+    public static boolean force_login = false;
+    public static boolean edit_without_login = false;
 
     public static void loadProperties()
     {
@@ -25,7 +27,9 @@ public class IssueProperties
             properties.load(Files.newInputStream(propertiesFile));
 
             login_on_start = properties.getProperty("login_on_start", "false").equals("true");
-            load_existing = properties.getProperty("load_existing");
+            load_existing = properties.getProperty("load_existing", "prompt");
+            force_login = properties.getProperty("force_login", "false").equals("true");
+            edit_without_login = properties.getProperty("edit_without_login", "false").equals("true");
 
 
         } catch (IOException e) {

@@ -15,7 +15,7 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import java.awt.Dimension;
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -78,6 +78,18 @@ public class IssueTrackerMain
 
         doneCheckBox.addActionListener((a) -> onFilter());
 
+        if(!IssueProperties.edit_without_login)
+        {
+            tabbedPane1.setEnabled(false);
+            table1.setEnabled(false);
+            addIssueButton.setEnabled(false);
+            userLabel.setEnabled(false);
+            viewButton.setEnabled(false);
+            editButton.setEnabled(false);
+            doneButton.setEnabled(false);
+            doneCheckBox.setEnabled(false);
+        }
+
         if(IssueProperties.login_on_start)
             onLogin();
     }
@@ -132,6 +144,18 @@ public class IssueTrackerMain
     {
         currentUser = loginInfo;
         userLabel.setText("User: " + loginInfo.username);
+
+        if(!IssueProperties.edit_without_login)
+        {
+            tabbedPane1.setEnabled(true);
+            table1.setEnabled(true);
+            addIssueButton.setEnabled(true);
+            userLabel.setEnabled(true);
+            viewButton.setEnabled(true);
+            editButton.setEnabled(true);
+            doneButton.setEnabled(true);
+            doneCheckBox.setEnabled(true);
+        }
     }
 
     private void onAddIssue()
