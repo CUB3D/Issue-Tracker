@@ -37,7 +37,7 @@ public class IssueTrackerMain
 
     public int currentLine = 0;
 
-    public LoginInfo currentUser = new LoginInfo("NO USER", null);
+    public LoginInfo currentUser = new LoginInfo("NO USER");
 
     public Map<String, IssueInfo> issues = new HashMap<>();
 

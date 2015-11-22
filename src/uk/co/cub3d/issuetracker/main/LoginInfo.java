@@ -9,11 +9,9 @@ import java.security.NoSuchAlgorithmException;
 public class LoginInfo
 {
     public String username;
-    public String password;
 
-    public LoginInfo(String username, String password)
+    public LoginInfo(String username)
     {
         this.username = username;
-        this.password = password;
     }
 }
