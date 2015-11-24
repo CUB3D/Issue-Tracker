@@ -36,8 +36,16 @@ public class IssueTrackerAdminMain
 
         removeSelectedButton.addActionListener((a) -> onRemove());
         addUserButton.addActionListener((a) -> onAddUser());
+        changePasswordButton.addActionListener((a) -> onChangePassword());
 
         loadUsers();
+    }
+
+    private void onChangePassword()
+    {
+        String selectedName = table1.getValueAt(table1.getSelectedRow(), 0).toString();
+
+        new IssueTrackerChangePassword(selectedName);
     }
 
     public void onAddUser()
