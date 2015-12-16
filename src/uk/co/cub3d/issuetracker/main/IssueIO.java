@@ -22,7 +22,7 @@ public class IssueIO
 {
     public static void writeIssues(Map<String, IssueInfo> issues)
     {
-        Path outputFile = Paths.get("issues.csv");
+        Path outputFile = Paths.get(IssueProperties.issue_file_location);
 
         try
         {
@@ -55,7 +55,7 @@ public class IssueIO
 
     public static void attemptLoadPreviousIssues()
     {
-        Path outputFile = Paths.get("issues.csv");
+        Path outputFile = Paths.get(IssueProperties.issue_file_location);
 
         if(Files.exists(outputFile))
         {

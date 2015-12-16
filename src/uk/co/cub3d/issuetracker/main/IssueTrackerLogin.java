@@ -7,7 +7,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
@@ -56,7 +55,7 @@ public class IssueTrackerLogin
     {
         String passwordHash = "";
 
-        Path p = Paths.get("accounts", username.getText());
+        Path p = Paths.get(IssueProperties.account_store_location, username.getText());
 
         String hash = "";
         String salt = "";

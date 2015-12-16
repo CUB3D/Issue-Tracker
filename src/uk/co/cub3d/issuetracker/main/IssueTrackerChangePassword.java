@@ -2,14 +2,9 @@ package uk.co.cub3d.issuetracker.main;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.WindowConstants;
-import java.awt.Dimension;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -54,7 +49,7 @@ public class IssueTrackerChangePassword
 
     private void onChange()
     {
-        Path userFile = Paths.get("accounts", username);
+        Path userFile = Paths.get(IssueProperties.account_store_location, username);
 
         try
         {

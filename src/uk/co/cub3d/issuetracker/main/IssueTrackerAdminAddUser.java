@@ -1,7 +1,6 @@
 package uk.co.cub3d.issuetracker.main;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -39,7 +38,7 @@ public class IssueTrackerAdminAddUser
 
     private void addUser()
     {
-        Path userFile = Paths.get("accounts", username.getText());
+        Path userFile = Paths.get(IssueProperties.account_store_location, username.getText());
 
         try
         {

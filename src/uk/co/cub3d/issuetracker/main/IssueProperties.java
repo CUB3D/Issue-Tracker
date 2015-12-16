@@ -15,6 +15,8 @@ public class IssueProperties
     public static String load_existing = "prompt";
     public static boolean force_login = false;
     public static boolean edit_without_login = false;
+    public static String issue_file_location = "Issues.csv";
+    public static String account_store_location = "accounts";
 
     public static void loadProperties()
     {
@@ -30,6 +32,8 @@ public class IssueProperties
             load_existing = properties.getProperty("load_existing", "prompt");
             force_login = properties.getProperty("force_login", "false").equals("true");
             edit_without_login = properties.getProperty("edit_without_login", "false").equals("true");
+            issue_file_location = properties.getProperty("issue_file_location", "Issues.csv");
+            account_store_location = properties.getProperty("account_store_location", "accounts");
 
 
         } catch (IOException e) {
