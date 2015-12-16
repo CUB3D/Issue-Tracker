@@ -102,7 +102,6 @@ public class IssueTrackerLogin
             }
 
             password.setText("");
-            username.setText("");
 
             chars.clear();
 
