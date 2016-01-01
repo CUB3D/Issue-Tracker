@@ -28,7 +28,7 @@ public class IssueTrackerAddIssue
 
     public IssueTrackerAddIssue(boolean editing, String hash)
     {
-        frame = new JFrame();
+        frame = new JFrame(editing ? "Issue Editor" : "Issue Logger");
 
         frame.setContentPane(content);
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
