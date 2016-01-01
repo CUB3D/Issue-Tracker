@@ -64,6 +64,7 @@ public class IssueTrackerAddIssue
 
             info.title = textFieldTitle.getText();
             info.description = descriptionTextArea.getText();
+            info.priority = comboBoxPriority.getSelectedItem().toString();
 
             IssueTrackerMain.instance.issues.put(info.hash.toString(), info);
 
