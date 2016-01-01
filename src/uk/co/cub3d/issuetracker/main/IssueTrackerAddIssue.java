@@ -50,6 +50,7 @@ public class IssueTrackerAddIssue
 
             textFieldTitle.setText(info.title);
             descriptionTextArea.setText(info.description);
+            comboBoxPriority.setSelectedItem(info.priority);
 
             this.isEditing = true;
             this.hash = hash;
