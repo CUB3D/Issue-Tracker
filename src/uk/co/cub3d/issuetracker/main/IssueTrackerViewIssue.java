@@ -27,7 +27,7 @@ public class IssueTrackerViewIssue
         frame.setContentPane(content);
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        frame.setMinimumSize(new Dimension(300, 300));
+        frame.setMinimumSize(new Dimension(900, 400));
 
         frame.setVisible(true);
 
