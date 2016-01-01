@@ -43,7 +43,7 @@ public class IssueIO
 
             for(IssueInfo info : issues.values())
             {
-                output.write(info.hash + "," + info.title + "," + info.author + "," + (info.done ? "1" : "0") + "," + info.priority + "\"" + info.description.replace("\n", System.lineSeparator()) + "\"" + System.lineSeparator());
+                output.write(info.hash + "," + info.title + "," + info.author + "," + (info.done ? "1" : "0") + "," + info.priority + ",\"" + info.description.replace("\n", System.lineSeparator()) + "\"" + System.lineSeparator());
             }
 
             output.flush();
