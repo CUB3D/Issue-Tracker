@@ -1,6 +1,7 @@
 package uk.co.cub3d.issuetracker.main;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -18,6 +19,7 @@ public class IssueTrackerAddIssue
     private JButton addButton;
     private JButton cancelButton;
     private JPanel content;
+    private JComboBox comboBoxPriority;
 
     public JFrame frame;
 
@@ -31,7 +33,7 @@ public class IssueTrackerAddIssue
         frame.setContentPane(content);
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        frame.setMinimumSize(new Dimension(300, 300));
+        frame.setMinimumSize(new Dimension(900, 400));
 
         frame.setVisible(true);
 
@@ -69,7 +71,7 @@ public class IssueTrackerAddIssue
         }
         else
         {
-            IssueTrackerMain.instance.addIssue(new IssueInfo(textFieldTitle.getText(), descriptionTextArea.getText(), IssueTrackerMain.instance.currentUser.username));
+            IssueTrackerMain.instance.addIssue(new IssueInfo(textFieldTitle.getText(), descriptionTextArea.getText(), IssueTrackerMain.instance.currentUser.username, comboBoxPriority.getSelectedItem().toString()));
         }
 
         frame.dispose();

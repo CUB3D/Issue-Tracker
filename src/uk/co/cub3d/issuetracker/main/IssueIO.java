@@ -37,11 +37,13 @@ public class IssueIO
         {
             BufferedWriter output = Files.newBufferedWriter(outputFile);
 
-            output.write("Hash,Title,Description" + System.lineSeparator());
+            output.write(IssueProperties.VERSION_ID + System.lineSeparator());
+
+            output.write("Hash,Title,Description,Priority" + System.lineSeparator());
 
             for(IssueInfo info : issues.values())
             {
-                output.write(info.hash + "," + info.title + "," + info.author + "," + (info.done ? "1" : "0") + ",\"" + info.description.replace("\n", System.lineSeparator()) + "\"" + System.lineSeparator());
+                output.write(info.hash + "," + info.title + "," + info.author + "," + (info.done ? "1" : "0") + "," + info.priority + "\"" + info.description.replace("\n", System.lineSeparator()) + "\"" + System.lineSeparator());
             }
 
             output.flush();
@@ -85,6 +87,8 @@ public class IssueIO
 
                     String s = "";
 
+                    String version_ID = reader.readLine();
+
                     reader.readLine(); // skip the line with the column headers for excel
 
                     while((s = reader.readLine()) != null)
@@ -96,8 +100,9 @@ public class IssueIO
                         String title = records[1];
                         String author = records[2];
                         boolean done = Integer.parseInt(records[3]) == 1;
+                        String priority = records[4];
 
-                        String description = records[4];
+                        String description = records[5];
 
                         if(!s.endsWith("\""))
                         {
@@ -118,7 +123,7 @@ public class IssueIO
                         // remove the quotes that allow excel to put the whole description in a multiline cell
                         description = description.substring(1, description.length() - 1);
 
-                        IssueInfo info = new IssueInfo(title, description, author);
+                        IssueInfo info = new IssueInfo(title, description, author, priority);
 
                         info.hash = hash;
                         info.done = done;

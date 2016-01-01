@@ -187,7 +187,7 @@ public class IssueTrackerMain
 
     public void addIssue_lam(IssueInfo info)
     {
-        ((DefaultTableModel) table1.getModel()).addRow(new Object[]{info.hash, info.author, info.title, info.done});
+        ((DefaultTableModel) table1.getModel()).addRow(new Object[]{info.hash, info.author, info.priority, info.title, info.done});
 
         currentLine++;
     }
@@ -228,8 +228,8 @@ public class IssueTrackerMain
 
     private void createUIComponents()
     {
-        String data[][] = new String[0][4];
-        String[] names = new String[] {"ID", "Author", "Title", "Done"};
+        String data[][] = new String[0][5];
+        String[] names = new String[] {"ID", "Author", "Priority", "Title", "Done"};
 
         DefaultTableModel model = new DefaultTableModel(data, names);
 
