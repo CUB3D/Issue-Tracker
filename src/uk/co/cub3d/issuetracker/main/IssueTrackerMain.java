@@ -16,8 +16,10 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import java.awt.*;
+import java.awt.Dimension;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -34,8 +36,7 @@ public class IssueTrackerMain
     private JButton viewButton;
     private JButton editButton;
     private JButton doneButton;
-    private JCheckBox doneCheckBox;
-    private JTextField textField1;
+    private JTextField textFieldFilter;
 
     public int currentLine = 0;
 
@@ -78,7 +79,7 @@ public class IssueTrackerMain
         editButton.addActionListener((a) -> onEdit());
         doneButton.addActionListener((a) -> onDone());
 
-        doneCheckBox.addActionListener((a) -> onFilter());
+        textFieldFilter.addActionListener((a) -> onFilter());
 
         if(!IssueProperties.edit_without_login)
         {
@@ -89,7 +90,7 @@ public class IssueTrackerMain
             viewButton.setEnabled(false);
             editButton.setEnabled(false);
             doneButton.setEnabled(false);
-            doneCheckBox.setEnabled(false);
+            textFieldFilter.setEnabled(false);
         }
 
         if(IssueProperties.login_on_start)
@@ -98,13 +99,25 @@ public class IssueTrackerMain
 
     private void onFilter()
     {
-        if(doneCheckBox.isSelected())
+        String[] strings = textFieldFilter.getText().split(" ");
+
+        for(int i = 0; i < strings.length; i++)
         {
-            applyTableFilter("false", 3);
+            strings[i] = strings[i].trim().toLowerCase();
         }
-        else
+
+        List<String> stringList = Arrays.asList(strings);
+
+        applyTableFilter("false|true", 4);
+
+        if(stringList.contains("#done"))
         {
-            applyTableFilter("false|true", 3);
+            applyTableFilter("true", 4);
+        }
+
+        if(stringList.contains("#!done"))
+        {
+            applyTableFilter("false", 4);
         }
     }
 
@@ -156,7 +169,7 @@ public class IssueTrackerMain
             viewButton.setEnabled(true);
             editButton.setEnabled(true);
             doneButton.setEnabled(true);
-            doneCheckBox.setEnabled(true);
+            textFieldFilter.setEnabled(true);
         }
     }
 
