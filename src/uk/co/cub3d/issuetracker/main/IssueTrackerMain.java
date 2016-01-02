@@ -10,6 +10,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
@@ -34,6 +35,7 @@ public class IssueTrackerMain
     private JButton editButton;
     private JButton doneButton;
     private JCheckBox doneCheckBox;
+    private JTextField textField1;
 
     public int currentLine = 0;
 
