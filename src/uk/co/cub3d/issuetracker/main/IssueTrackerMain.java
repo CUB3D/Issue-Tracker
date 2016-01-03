@@ -103,12 +103,16 @@ public class IssueTrackerMain
 
         for(int i = 0; i < strings.length; i++)
         {
-            strings[i] = strings[i].trim().toLowerCase();
+            if(strings[i].startsWith("#"))
+            {
+                strings[i] = strings[i].toLowerCase();
+            }
         }
 
         List<String> stringList = Arrays.asList(strings);
 
         applyTableFilter("false|true", 4);
+        applyTableFilter(".", 1);
 
         if(stringList.contains("#done"))
         {
@@ -118,6 +122,18 @@ public class IssueTrackerMain
         if(stringList.contains("#!done"))
         {
             applyTableFilter("false", 4);
+        }
+
+        if(stringList.contains("#author"))
+        {
+            if(stringList.size() > stringList.indexOf("#author") + 1)
+            {
+                String authorName = stringList.get(stringList.indexOf("#author") + 1);
+
+                System.out.println(authorName);
+
+                applyTableFilter(authorName, 1);
+            }
         }
     }
 
