@@ -159,9 +159,19 @@ public class IssueTrackerMain
         {
             if(stringList.size() > stringList.indexOf("#title") + 1)
             {
-                String authorName = stringList.get(stringList.indexOf("#title") + 1);
+                String title = stringList.get(stringList.indexOf("#title") + 1);
 
-                applyTableFilter(authorName, 3);
+                applyTableFilter(title, 3);
+            }
+        }
+
+        if(stringList.contains("#hash"))
+        {
+            if(stringList.size() > stringList.indexOf("#hash") + 1)
+            {
+                String hash = stringList.get(stringList.indexOf("#hash") + 1);
+
+                applyTableFilter(hash, 0);
             }
         }
     }
