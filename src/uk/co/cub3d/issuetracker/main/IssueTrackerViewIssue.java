@@ -17,6 +17,7 @@ public class IssueTrackerViewIssue
     private JTextArea descriptionTextArea;
     private JLabel titleLabel;
     private JButton doneButton;
+    private JLabel priorityLabel;
 
     public JFrame frame;
 
@@ -37,6 +38,7 @@ public class IssueTrackerViewIssue
 
         descriptionTextArea.setText(info.description);
         titleLabel.setText("Title: " + info.title);
+        priorityLabel.setText("Priority: " + info.priority);
 
 
         doneButton.addActionListener((a) -> frame.dispose());
