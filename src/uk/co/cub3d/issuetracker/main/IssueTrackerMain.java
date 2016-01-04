@@ -17,6 +17,8 @@ import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -79,7 +81,26 @@ public class IssueTrackerMain
         editButton.addActionListener((a) -> onEdit());
         doneButton.addActionListener((a) -> onDone());
 
-        textFieldFilter.addActionListener((a) -> onFilter());
+        textFieldFilter.addKeyListener(new KeyListener()
+        {
+            @Override
+            public void keyTyped(KeyEvent e)
+            {
+                onFilter();
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e)
+            {
+                onFilter();
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e)
+            {
+                onFilter();
+            }
+        });
 
         if(!IssueProperties.edit_without_login)
         {
@@ -130,9 +151,17 @@ public class IssueTrackerMain
             {
                 String authorName = stringList.get(stringList.indexOf("#author") + 1);
 
-                System.out.println(authorName);
-
                 applyTableFilter(authorName, 1);
+            }
+        }
+
+        if(stringList.contains("#title"))
+        {
+            if(stringList.size() > stringList.indexOf("#title") + 1)
+            {
+                String authorName = stringList.get(stringList.indexOf("#title") + 1);
+
+                applyTableFilter(authorName, 3);
             }
         }
     }
