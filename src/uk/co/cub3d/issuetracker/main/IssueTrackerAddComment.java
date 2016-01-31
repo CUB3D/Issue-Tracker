@@ -16,6 +16,8 @@ public class IssueTrackerAddComment
     private JTextArea textArea1;
     private JButton addCommentButton;
 
+    public IssueInfo info;
+
     public JFrame frame;
 
     public IssueTrackerAddComment(String hash)
@@ -31,6 +33,14 @@ public class IssueTrackerAddComment
 
         frame.pack();
 
-        IssueInfo info = IssueTrackerMain.instance.issues.get(hash);
+        info = IssueTrackerMain.instance.issues.get(hash);
+
+        addCommentButton.addActionListener((a) -> onAddComment());
+    }
+
+    private void onAddComment()
+    {
+        info.comments.add(textArea1.getText());
+        IssueTrackerMain.instance.issues.put(info.hash.toString(), info);
     }
 }

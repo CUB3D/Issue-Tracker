@@ -1,5 +1,7 @@
 package uk.co.cub3d.issuetracker.main;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -13,6 +15,7 @@ public class IssueInfo
     public boolean done;
     public String author;
     public String priority;
+    public List<String> comments;
 
     public IssueInfo(String title, String description, String author, String priority)
     {
@@ -20,5 +23,6 @@ public class IssueInfo
         this.description = description;
         this.author = author;
         this.priority = priority;
+        this.comments = new ArrayList<>();
     }
 }
