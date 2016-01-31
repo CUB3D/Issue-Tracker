@@ -18,6 +18,9 @@ public class IssueTrackerViewIssue
     private JLabel titleLabel;
     private JButton doneButton;
     private JLabel priorityLabel;
+    private JButton addCommentButton;
+
+    public IssueInfo info;
 
     public JFrame frame;
 
@@ -34,7 +37,7 @@ public class IssueTrackerViewIssue
 
         frame.pack();
 
-        IssueInfo info = IssueTrackerMain.instance.issues.get(hash);
+        info = IssueTrackerMain.instance.issues.get(hash);
 
         descriptionTextArea.setText(info.description);
         titleLabel.setText("Title: " + info.title);
@@ -42,5 +45,11 @@ public class IssueTrackerViewIssue
 
 
         doneButton.addActionListener((a) -> frame.dispose());
+        addCommentButton.addActionListener(a -> onAddComment());
+    }
+
+    public void onAddComment()
+    {
+        new IssueTrackerAddComment(info.hash.toString());
     }
 }
