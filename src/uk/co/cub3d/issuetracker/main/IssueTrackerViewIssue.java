@@ -16,13 +16,10 @@ public class IssueTrackerViewIssue
     private JLabel priorityLabel;
     private JButton addCommentButton;
     private JTextPane textPane1;
-    private JTree tree1;
 
     public IssueInfo info;
 
     public JFrame frame;
-
-    public DefaultMutableTreeNode comments;
 
     public IssueTrackerViewIssue(String hash)
     {
@@ -39,17 +36,15 @@ public class IssueTrackerViewIssue
 
         info = IssueTrackerMain.instance.issues.get(hash);
 
+        for(IssueInfo.Comment s : info.comments)
+        {
+            textPane1.setText(textPane1.getText() + "User: " + s.username + "\n" + s.content + "\n");
+
+        }
+
         descriptionTextArea.setText(info.description);
         titleLabel.setText("Title: " + info.title);
         priorityLabel.setText("Priority: " + info.priority);
-
-        for(String s : info.comments)
-        {
-            DefaultMutableTreeNode node = new DefaultMutableTreeNode(s);
-
-            comments.add(node);
-        }
-
 
         doneButton.addActionListener((a) -> frame.dispose());
         addCommentButton.addActionListener(a -> onAddComment());
@@ -62,16 +57,6 @@ public class IssueTrackerViewIssue
 
     public void updateComments(String comment)
     {
-        DefaultMutableTreeNode node = new DefaultMutableTreeNode(comment);
-
-        comments.add(node);
-    }
-
-
-    private void createUIComponents()
-    {
-        comments = new DefaultMutableTreeNode();
-
-        tree1 = new JTree(comments);
+        textPane1.setText(textPane1.getText() + "User: " + IssueTrackerMain.instance.currentUser.username + "\n" + comment + "\n");
     }
 }

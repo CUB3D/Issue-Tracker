@@ -15,7 +15,7 @@ public class IssueInfo
     public boolean done;
     public String author;
     public String priority;
-    public List<String> comments;
+    public List<Comment> comments;
 
     public IssueInfo(String title, String description, String author, String priority)
     {
@@ -24,5 +24,11 @@ public class IssueInfo
         this.author = author;
         this.priority = priority;
         this.comments = new ArrayList<>();
+    }
+
+    public class Comment
+    {
+        public String username;
+        public String content;
     }
 }

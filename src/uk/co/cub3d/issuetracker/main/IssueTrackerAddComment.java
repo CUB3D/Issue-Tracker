@@ -44,7 +44,12 @@ public class IssueTrackerAddComment
 
     private void onAddComment()
     {
-        info.comments.add(textArea1.getText());
+        IssueInfo.Comment comment = info.new Comment();
+
+        comment.username = IssueTrackerMain.instance.currentUser.username;
+        comment.content = textArea1.getText();
+
+        info.comments.add(comment);
         IssueTrackerMain.instance.issues.put(info.hash.toString(), info);
         issueViewer.updateComments(textArea1.getText());
         frame.dispose();
