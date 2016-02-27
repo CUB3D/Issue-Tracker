@@ -20,7 +20,9 @@ public class IssueTrackerAddComment
 
     public JFrame frame;
 
-    public IssueTrackerAddComment(String hash)
+    public IssueTrackerViewIssue issueViewer;
+
+    public IssueTrackerAddComment(String hash, IssueTrackerViewIssue issueViewer)
     {
         frame = new JFrame("Issue Commenter");
 
@@ -36,11 +38,15 @@ public class IssueTrackerAddComment
         info = IssueTrackerMain.instance.issues.get(hash);
 
         addCommentButton.addActionListener((a) -> onAddComment());
+
+        this.issueViewer = issueViewer;
     }
 
     private void onAddComment()
     {
         info.comments.add(textArea1.getText());
         IssueTrackerMain.instance.issues.put(info.hash.toString(), info);
+        issueViewer.updateComments(textArea1.getText());
+        frame.dispose();
     }
 }
