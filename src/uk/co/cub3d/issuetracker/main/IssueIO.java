@@ -43,7 +43,14 @@ public class IssueIO
 
             for(IssueInfo info : issues.values())
             {
-                output.write(info.hash + "," + info.title + "," + info.author + "," + (info.done ? "1" : "0") + "," + info.priority + ",\"" + info.description.replace("\n", System.lineSeparator()) + "\"" + System.lineSeparator());
+                String commentData = "";
+
+                for(IssueInfo.Comment data : info.comments)
+                {
+                    commentData += data.username + ",\"" + data.content.replace("\n", System.lineSeparator()) + "\"";
+                }
+
+                output.write(info.hash + "," + info.title + "," + info.author + "," + (info.done ? "1" : "0") + "," + info.priority + ",\"" + info.description.replace("\n", System.lineSeparator()) + "\"," + commentData + System.lineSeparator());
             }
 
             output.flush();
