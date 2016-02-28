@@ -26,6 +26,17 @@ public class IssueProperties
 
         Path propertiesFile = Paths.get("Config.conf");
 
+        if (!Files.exists(propertiesFile))
+        {
+            System.out.println("No config file found, creating");
+            try
+            {
+                Files.createFile(propertiesFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         try
         {
             properties.load(Files.newInputStream(propertiesFile));
