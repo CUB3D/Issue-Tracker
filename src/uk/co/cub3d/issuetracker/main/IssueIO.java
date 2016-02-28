@@ -50,7 +50,7 @@ public class IssueIO
                     commentData += data.username + ",\"" + data.content.replace("\n", System.lineSeparator()) + "\"";
                 }
 
-                output.write(info.hash + "," + info.title + "," + info.author + "," + (info.done ? "1" : "0") + "," + info.priority + ",\"" + info.description.replace("\n", System.lineSeparator()) + "\"," + commentData + System.lineSeparator());
+                output.write(info.hash + "," + info.title + "," + info.author + "," + (info.done ? "1" : "0") + "," + info.priority + "," + (info.description.replace("\n", System.lineSeparator()).length() - 4) + ",\"" + info.description.replace("\n", System.lineSeparator()) + "\"" + System.lineSeparator());
             }
 
             output.flush();
@@ -109,21 +109,51 @@ public class IssueIO
                         boolean done = Integer.parseInt(records[3]) == 1;
                         String priority = records[4];
 
-                        String description = records[5];
+                        String description = "";
 
-                        if(!s.endsWith("\""))
+                        if(version_ID.equals("ISU_1_1"))
                         {
-                            description += "\n";
+                            description = records[5];
 
-                            while ((s = reader.readLine()) != null && !s.endsWith("\""))
-                            {
-                                description += s;
-                                description += "\n"; // re-add newlines
+                            if (!s.endsWith("\"")) {
+                                description += "\n";
+
+                                while ((s = reader.readLine()) != null && !s.endsWith("\"")) {
+                                    description += s;
+                                    description += "\n"; // re-add newlines
+                                }
+
+                                if (s != null) {
+                                    description += s;
+                                }
                             }
+                        }
+                        else
+                        {
+                            int commentLength = Integer.parseInt(records[5]);
 
-                            if (s != null)
+                            description = records[6];
+
+                            if(!description.endsWith("\""))
                             {
-                                description += s;
+                                commentLength -= description.length();
+
+                                while(commentLength > 0)
+                                {
+                                    s = reader.readLine();
+                                    description += "\n";
+
+                                    if(commentLength - s.length() < 0)
+                                    {
+                                        commentLength = 0; // DEMO
+                                        //fancyness
+                                    }
+                                    else
+                                    {
+                                        description += s;
+                                        commentLength -= s.length();
+                                    }
+                                }
                             }
                         }
 
