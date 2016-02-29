@@ -55,7 +55,7 @@ public class IssueIO
                     commentData = commentData.substring(0, commentData.length() - 1);
                 }
 
-                output.write(info.hash + "," + info.title + "," + info.author + "," + (info.done ? "1" : "0") + "," + info.priority + "," + (info.description.replace("\n", System.lineSeparator()).length() - 4) + ",\"" + info.description.replace("\n", System.lineSeparator()) + "\"," + commentData.length() + System.lineSeparator());
+                output.write(info.hash + "," + info.title + "," + info.author + "," + (info.done ? "1" : "0") + "," + info.priority + "," + (info.description.replace("\n", System.lineSeparator()).length() - 4) + ",\"" + info.description.replace("\n", System.lineSeparator()) + "\"," +  + info.comments.size() + "," + commentData.length() + System.lineSeparator());
             }
 
             output.flush();
@@ -159,11 +159,47 @@ public class IssueIO
                                         descriptionLength -= s.length();
                                     }
                                 }
+
+                                String[] recordsNew = s.split(",");
+
+                                records = new String[6 + recordsNew.length];
+
+                                for(int ii = 0; ii < records.length; ii++)
+                                {
+                                    records[ii] = "";
+                                }
+
+                                for(int ii = 6; ii < records.length; ii++)
+                                {
+                                    records[ii] = recordsNew[ii - 6];
+                                }
+
+                                for(String ss : records)
+                                {
+                                    System.out.println(ss);
+                                }
+
+                                for(String ss : recordsNew)
+                                {
+                                    System.out.println(ss);
+                                }
+                            }
+                        }
+
+                        if (version_ID.equals("ISU_1_3"))
+                        {
+                            System.out.println(s);
+
+                            int commentCount = Integer.parseInt(records[7]);
+
+                            for(int ii = 0; i < 0; i++)
+                            {
+
                             }
                         }
 
                         // remove the quotes that allow excel to put the whole description in a multiline cell
-                        description = description.substring(1, description.length() - 1);
+                        description = description.substring(1, description.length());
 
                         IssueInfo info = new IssueInfo(title, description, author, priority);
 
