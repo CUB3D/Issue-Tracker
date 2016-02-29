@@ -47,10 +47,15 @@ public class IssueIO
 
                 for(IssueInfo.Comment data : info.comments)
                 {
-                    commentData += data.username + ",\"" + data.content.replace("\n", System.lineSeparator()) + "\"";
+                    commentData += data.username + ",\"" + data.content.replace("\n", System.lineSeparator()) + "\",";
                 }
 
-                output.write(info.hash + "," + info.title + "," + info.author + "," + (info.done ? "1" : "0") + "," + info.priority + "," + (info.description.replace("\n", System.lineSeparator()).length() - 4) + ",\"" + info.description.replace("\n", System.lineSeparator()) + "\"" + System.lineSeparator());
+                if(commentData.length() > 0)
+                {
+                    commentData = commentData.substring(0, commentData.length() - 1);
+                }
+
+                output.write(info.hash + "," + info.title + "," + info.author + "," + (info.done ? "1" : "0") + "," + info.priority + "," + (info.description.replace("\n", System.lineSeparator()).length() - 4) + ",\"" + info.description.replace("\n", System.lineSeparator()) + "\"," + commentData.length() + System.lineSeparator());
             }
 
             output.flush();
@@ -130,28 +135,28 @@ public class IssueIO
                         }
                         else
                         {
-                            int commentLength = Integer.parseInt(records[5]);
+                            int descriptionLength = Integer.parseInt(records[5]);
 
                             description = records[6];
 
                             if(!description.endsWith("\""))
                             {
-                                commentLength -= description.length();
+                                descriptionLength -= description.length();
 
-                                while(commentLength > 0)
+                                while(descriptionLength > 0)
                                 {
                                     s = reader.readLine();
                                     description += "\n";
 
-                                    if(commentLength - s.length() < 0)
+                                    if(descriptionLength - s.length() < 0)
                                     {
-                                        commentLength = 0; // DEMO
-                                        //fancyness
+                                        description += s.substring(0, descriptionLength);
+                                        descriptionLength = 0;
                                     }
                                     else
                                     {
                                         description += s;
-                                        commentLength -= s.length();
+                                        descriptionLength -= s.length();
                                     }
                                 }
                             }
