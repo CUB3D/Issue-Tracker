@@ -16,7 +16,7 @@ public class CSVParser
 {
     public static void main(String[] args) throws IOException
     {
-        parseCSV(Files.readAllLines(Paths.get("B:\\Google Drive\\Programs\\Issue Tracker\\Issues.csv")));
+        parseCSV(Files.readAllLines(Paths.get("Issues.csv")));
     }
 
     public static void parseCSV(List<String> fileData)
@@ -35,27 +35,37 @@ public class CSVParser
 
             if(records.length > 1)
             {
-                String lastRecord = records[records.length - 1];
-
-                if (lastRecord.startsWith("\""))
+                while(true)
                 {
-                    // multiline record
-                    while (true)
+                    String lastRecord = records[records.length - 1];
+
+                    if (lastRecord.startsWith("\""))
                     {
-                        i++;
-                        data = fileData.get(i);
-                        records = data.split(",");
-
-                        lastRecord += records[0];
-
-                        if (records[0].endsWith("\""))
+                        // multiline record
+                        while (true)
                         {
-                            break;
+                            i++;
+                            data = fileData.get(i);
+                            records = data.split(",");
+
+                            lastRecord += records[0];
+
+                            // if the first record ends with a quote then we have reached the end of a
+                            // multiline record
+                            if (records[0].endsWith("\""))
+                            {
+                                break;
+                            }
                         }
                     }
-                }
+                    recordsForThisLine.add(lastRecord);
+                    lastRecord = "";
 
-                recordsForThisLine.add(lastRecord);
+                    if(!lastRecord.startsWith("\"")) // if the last record does not starts with a quote then the end of the line has been reached
+                    {
+                        break;
+                    }
+                }
             }
 
             for(String s : recordsForThisLine)
