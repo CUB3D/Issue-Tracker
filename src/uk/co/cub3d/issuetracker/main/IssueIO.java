@@ -143,17 +143,16 @@ public class IssueIO
                             {
                                 descriptionLength -= description.length();
 
-                                while(descriptionLength > 0)
+                                while (descriptionLength > 0)
                                 {
                                     s = reader.readLine();
                                     description += "\n";
 
-                                    if(descriptionLength - s.length() < 0)
+                                    if (descriptionLength - s.length() < 0)
                                     {
                                         description += s.substring(0, descriptionLength);
                                         descriptionLength = 0;
-                                    }
-                                    else
+                                    } else
                                     {
                                         description += s;
                                         descriptionLength -= s.length();
@@ -164,33 +163,23 @@ public class IssueIO
 
                                 records = new String[6 + recordsNew.length];
 
-                                for(int ii = 0; ii < records.length; ii++)
+                                for (int ii = 0; ii < records.length; ii++)
                                 {
                                     records[ii] = "";
                                 }
 
-                                for(int ii = 6; ii < records.length; ii++)
+                                for (int ii = 6; ii < records.length; ii++)
                                 {
                                     records[ii] = recordsNew[ii - 6];
-                                }
-
-                                for(String ss : records)
-                                {
-                                    System.out.println(ss);
-                                }
-
-                                for(String ss : recordsNew)
-                                {
-                                    System.out.println(ss);
                                 }
                             }
                         }
 
                         if (version_ID.equals("ISU_1_3"))
                         {
-                            System.out.println(s);
-
                             int commentCount = Integer.parseInt(records[7]);
+
+                            System.out.println(commentCount);
 
                             for(int ii = 0; i < 0; i++)
                             {
@@ -199,7 +188,7 @@ public class IssueIO
                         }
 
                         // remove the quotes that allow excel to put the whole description in a multiline cell
-                        description = description.substring(1, description.length());
+                        description = description.replaceAll("\"", "");
 
                         IssueInfo info = new IssueInfo(title, description, author, priority);
 
