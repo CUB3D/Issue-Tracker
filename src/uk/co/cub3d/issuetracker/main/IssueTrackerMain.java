@@ -252,7 +252,9 @@ public class IssueTrackerMain
 
         issues.values().forEach(this::addIssue_lam);
 
-        IssueIO.writeIssues(issues);
+       // IssueIO.writeIssues(issues);
+        // TODO: 22/03/2016, add path from config
+        CSVParser.writeCSV("B:\\Google Drive\\Programs\\Issue Tracker\\Issues-new.csv");
     }
 
     public void addIssue_lam(IssueInfo info)
@@ -292,7 +294,9 @@ public class IssueTrackerMain
 
             instance = new IssueTrackerMain();
 
-            IssueIO.attemptLoadPreviousIssues();
+            //IssueIO.attemptLoadPreviousIssues();
+            //// TODO: 22/03/2016, make the path from properties
+            CSVParser.parseCSV("B:\\Google Drive\\Programs\\Issue Tracker\\Issues-new.csv");
         }
     }
 
