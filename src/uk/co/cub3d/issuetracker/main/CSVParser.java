@@ -80,7 +80,10 @@ public class CSVParser
                         IssueInfo.Comment comment = info.new Comment();
 
                         comment.username = issueData[7 + commentIndex++];
-                        comment.username = issueData[7 + commentIndex++];
+                        comment.content = issueData[7 + commentIndex++];
+
+                        System.out.println("Name: " + comment.username);
+                        System.out.println("Content: " + comment.content);
 
                         info.comments.add(comment);
                     }
