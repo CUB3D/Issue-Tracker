@@ -25,6 +25,16 @@ public class CSVParser
         writeCSV("B:\\Google Drive\\Programs\\Issue Tracker\\Issues-new.csv");
     }
 
+    public static void parseCSVFromIssues()
+    {
+        parseCSV(IssueProperties.issue_file_location);
+    }
+
+    public static void writeCSVToIssues()
+    {
+        parseCSV(IssueProperties.issue_file_location);
+    }
+
     public static void parseCSV(String fileName)
     {
         try
