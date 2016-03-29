@@ -32,7 +32,7 @@ public class CSVParser
 
     public static void writeCSVToIssues()
     {
-        parseCSV(IssueProperties.issue_file_location);
+        writeCSV(IssueProperties.issue_file_location);
     }
 
     public static void parseCSV(String fileName)
@@ -44,8 +44,22 @@ public class CSVParser
 
             String ISUVersion = entries.get(0)[0];
 
-            // start at 2 to skip the column headers and the version
-            for(int i = 2; i < entries.size(); i++)
+            String[] priorityArray = entries.get(1);
+
+            int i = 2;
+
+            if(ISUVersion.equals("ISU_1_5"))
+            {
+                for (String s : priorityArray)
+                {
+                    System.out.println(s);
+                }
+
+                i = 3;
+            }
+
+            // start at 3 to skip the column headers, the version and the priority data
+            for(;i < entries.size(); i++)
             {
                 String[] issueData = entries.get(i);
 
@@ -66,7 +80,7 @@ public class CSVParser
                     description = issueData[6];
                 }
 
-                if(ISUVersion.equals("ISU_1_4"))
+                if(ISUVersion.equals("ISU_1_4") || ISUVersion.equals("ISU_1_5"))
                 {
                     hash = issueData[0];
                     title = issueData[1];
@@ -123,6 +137,15 @@ public class CSVParser
             CSVWriter writer = new CSVWriter(new FileWriter(fileName));
 
             writer.writeNext(new String[] {IssueProperties.VERSION_ID});
+
+            // save all of the priorities
+
+            String[] priorityArray = new String[IssueTrackerMain.instance.priorities.size()];
+
+            IssueTrackerMain.instance.priorities.toArray(priorityArray);
+
+            writer.writeNext(priorityArray);
+
             writer.writeNext(new String[] {"Hash", "Title", "Description", "Priority"});
 
             for(IssueInfo info : IssueTrackerMain.instance.issues.values())
