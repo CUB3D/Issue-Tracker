@@ -122,7 +122,7 @@ public class CSVParser
         {
             CSVWriter writer = new CSVWriter(new FileWriter(fileName));
 
-            writer.writeNext(new String[] {"ISU_1_4"});
+            writer.writeNext(new String[] {IssueProperties.VERSION_ID});
             writer.writeNext(new String[] {"Hash", "Title", "Description", "Priority"});
 
             for(IssueInfo info : IssueTrackerMain.instance.issues.values())

@@ -19,11 +19,7 @@ import javax.swing.table.TableRowSorter;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by Callum on 11/11/2015.
@@ -45,6 +41,7 @@ public class IssueTrackerMain
     public LoginInfo currentUser = new LoginInfo("NO USER");
 
     public Map<String, IssueInfo> issues = new HashMap<>();
+    public List<String> priorities = new ArrayList<>();
 
     public TableRowSorter<DefaultTableModel> sorter;
 
@@ -68,7 +65,6 @@ public class IssueTrackerMain
         bar.add(user);
 
         frame.setJMenuBar(bar);
-
 
         frame.setContentPane(content);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -116,6 +112,11 @@ public class IssueTrackerMain
 
         if(IssueProperties.login_on_start)
             onLogin();
+
+        priorities.add("Minor");
+        priorities.add("Fix");
+        priorities.add("Major");
+        priorities.add("Critical");
     }
 
     private void onFilter()

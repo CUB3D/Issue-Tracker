@@ -11,7 +11,7 @@ import java.util.Properties;
  */
 public class IssueProperties
 {
-    public static final String VERSION_ID = "ISU_1_3";
+    public static final String VERSION_ID = "ISU_1_4";
 
     public static boolean login_on_start = false;
     public static String load_existing = "prompt";
