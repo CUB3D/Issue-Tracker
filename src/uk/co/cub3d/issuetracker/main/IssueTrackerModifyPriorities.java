@@ -2,6 +2,9 @@ package uk.co.cub3d.issuetracker.main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 /**
  * Created by Callum on 29/03/2016.
@@ -32,6 +35,15 @@ public class IssueTrackerModifyPriorities
 
         addButton.addActionListener(a -> onAddPriority());
         removeButton.addActionListener(a -> onRemovePriority());
+
+        frame.addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosed(WindowEvent e)
+            {
+                CSVParser.writeCSVToIssues();
+            }
+        });
     }
 
     private void onRemovePriority()
