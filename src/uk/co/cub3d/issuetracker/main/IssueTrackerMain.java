@@ -64,6 +64,14 @@ public class IssueTrackerMain
 
         bar.add(user);
 
+        JMenu settings = new JMenu("Settings");
+
+        JMenuItem prioritiesItem = new JMenuItem("Priorities");
+        prioritiesItem.addActionListener(a -> onChangePriorities());
+        settings.add(prioritiesItem);
+
+        bar.add(settings);
+
         frame.setJMenuBar(bar);
 
         frame.setContentPane(content);
@@ -117,6 +125,11 @@ public class IssueTrackerMain
         priorities.add("Fix");
         priorities.add("Major");
         priorities.add("Critical");
+    }
+
+    private void onChangePriorities()
+    {
+        new IssueTrackerModifyPriorities();
     }
 
     private void onFilter()
